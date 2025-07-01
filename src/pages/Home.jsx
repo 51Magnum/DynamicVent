@@ -1,9 +1,18 @@
 function Home() {
   return (
-    <section>
-      <h2 className="text-3xl font-bold mb-4">Breathe Better. Live Smarter.</h2>
-      <p className="text-lg mb-4">DynamicVent floor registers offer precise airflow control for any room. Upgrade from outdated vents and take charge of your home’s comfort.</p>
-      <a href="/shop" className="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">Shop Now</a>
+    <section className="flex flex-col items-center justify-center text-center py-20 px-6 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+        Smart Vents for Smarter Homes
+      </h1>
+      <p className="text-lg md:text-xl max-w-2xl mb-6 text-gray-300">
+        DynamicVent gives you precision control over airflow, comfort, and energy savings — all in a sleek, modern design.
+      </p>
+      <a
+        href="/shop"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition-all"
+      >
+        Shop Vents Now
+      </a>
     </section>
   );
 }
