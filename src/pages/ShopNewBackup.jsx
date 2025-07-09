@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "../components/ui/card";
-
+import { Button } from "../components/ui/button";
 import { Separator } from "../components/ui/separator";
 import { colors, sizes } from "../data/options";
 
@@ -10,12 +10,12 @@ export default function Shop() {
   const [selectedPattern, setSelectedPattern] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
 
-  
-  
+  const handleNext = () => setStep((prev) => Math.min(prev + 1, 4));
+  const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
 
-  
+  const isReadyToBuy = selectedSize && selectedPattern && selectedColor;
 
-  function Summary() { return (
+  const Summary = () => (
     <div className="space-y-8 text-center bg-gray-50 p-6 rounded-xl shadow-md">
       <div>
         <p className="text-xl font-bold mb-2">Selected Pattern:</p>
@@ -40,9 +40,7 @@ export default function Shop() {
         <p className="text-gray-500">Size: <strong>{selectedSize}</strong></p>
       </div>
     </div>
-  
   );
-}
 
   const patternNamesBySize = {
     "4x8": [
@@ -137,24 +135,11 @@ export default function Shop() {
       </p>
 
       {/* Stepper */}
-      <div className="flex justify-between items-center mb-6">
-        
-        <div className="flex gap-6 text-sm font-medium">
-          {[1, 2, 3, 4].map((s) => (
-            <span
-              key={s}
-              className={`cursor-pointer transition-colors ${
-                step === s ? "text-black underline" : "text-gray-400 hover:text-black"
-              }`}
-              onClick={() => setStep(s)}
-            >
-              {s === 1 && "1. Pick Size"}
-              {s === 2 && "2. Pick Pattern"}
-              {s === 3 && "3. Pick Color"}
-              {s === 4 && "4. Review & Buy"}
-            </span>
-          ))}
-        </div>
+      <div className="flex justify-between mb-6">
+        <span className={step === 1 ? "font-bold" : "text-gray-400"}>1. Pick Size</span>
+        <span className={step === 2 ? "font-bold" : "text-gray-400"}>2. Pick Pattern</span>
+        <span className={step === 3 ? "font-bold" : "text-gray-400"}>3. Pick Color</span>
+        <span className={step === 4 ? "font-bold" : "text-gray-400"}>4. Review & Buy</span>
       </div>
       <Separator className="mb-6" />
 
@@ -234,17 +219,20 @@ export default function Shop() {
 
       {step === 4 && (
         <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-6">Review Your Order</h2>
           <Summary />
-          <div className="mt-8">
-            <button className="bg-black text-white px-6 py-3 rounded text-lg hover:bg-gray-800 transition">
-              Buy Now
-            </button>
-          </div>
         </div>
       )}
 
       {/* Navigation Buttons */}
-      
+      <div className="flex justify-between mt-10">
+        {step > 1 ? <Button onClick={handleBack}>Back</Button> : <div />}
+        {step < 4 ? (
+          <Button onClick={handleNext} disabled={(step === 1 && !selectedSize) || (step === 2 && !selectedPattern) || (step === 3 && !selectedColor)}>Next</Button>
+        ) : (
+          <Button disabled={!isReadyToBuy}>Buy Now</Button>
+        )}
+      </div>
     </div>
   );
 }
