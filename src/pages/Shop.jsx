@@ -1,109 +1,238 @@
-import { useState } from 'react';
+import React, { useState } from "react";
+import { Card, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Separator } from "../components/ui/separator";
+import { colors, sizes } from "../data/options";
 
-const colorSwatches = {
-  "Burnished Amber": "#8B5E3C",
-  "Satin Bronze": "#A77044",
-  "Brown": "#5B3A29",
-  "Champagne Mist": "#D2BFA3",
-  "Oil Rubbed Bronze": "#3A2F2A",
-  "Antique Pewter": "#8C8C8C"
-};
+export default function Shop() {
+  const [step, setStep] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedPattern, setSelectedPattern] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
 
-function ProductCard({ name, price, image }) {
-  const [color, setColor] = useState("Burnished Amber");
-  const [customEnabled, setCustomEnabled] = useState(false);
-  const [customText, setCustomText] = useState("");
+  const handleNext = () => setStep((prev) => Math.min(prev + 1, 4));
+  const handleBack = () => setStep((prev) => Math.max(prev - 1, 1));
+
+  const isReadyToBuy = selectedSize && selectedPattern && selectedColor;
+
+  const Summary = () => (
+    <div className="space-y-8 text-center bg-gray-50 p-6 rounded-xl shadow-md">
+      <div>
+        <p className="text-xl font-bold mb-2">Selected Pattern:</p>
+        <img
+          src={`/vents/${selectedSize}/${selectedPattern}.bmp`}
+          alt={selectedPattern}
+          className="mx-auto mb-2 h-48 object-contain shadow-sm border rounded"
+        />
+        <p className="text-lg text-gray-700">{selectedPattern}</p>
+      </div>
+      <div>
+        <p className="text-xl font-bold mb-2">Selected Color:</p>
+        <div className="flex justify-center items-center gap-4">
+          <div
+            className="w-12 h-6 rounded border shadow"
+            style={{ backgroundColor: colors.find(c => c.name === selectedColor)?.hex }}
+          ></div>
+          <span className="text-lg text-gray-700 font-medium">{selectedColor}</span>
+        </div>
+      </div>
+      <div className="pt-4 border-t">
+        <p className="text-gray-500">Size: <strong>{selectedSize}</strong></p>
+      </div>
+    </div>
+  );
+
+  const patternNamesBySize = {
+    "4x8": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "4x10": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "4x12": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "4x14": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "6x10": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "6x12": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ],
+    "6x14": [
+      "Chevron",
+      "HappyHoliday",
+      "RecPatter-1",
+      "Round-1",
+      "Round-2",
+      "Round-3",
+      "Square-1",
+      "Square-2",
+      "Square-3"
+    ]
+  };
+
+  const getPatternsForSize = (size) => {
+    const baseName = size;
+    return (patternNamesBySize[size] || []).map((name) => `${baseName}_${name}`);
+  };
 
   return (
-    <div className="border rounded-lg p-4 shadow-md bg-white text-center flex flex-col">
-      <img src={image} alt={name} className="w-full h-48 object-cover mb-4 rounded" />
-      <h3 className="text-xl font-semibold mb-1">{name}</h3>
-      <p className="text-gray-600 mb-3">{price}</p>
+    <div className="max-w-4xl mx-auto px-6 py-12">
+      <h1 className="text-4xl font-bold mb-4 text-center">Order Your DynamicVent</h1>
+      <p className="text-center text-lg mb-10">
+        Follow these steps to customize and order your premium flush-mount floor vent.
+      </p>
 
-      {/* Color dropdown */}
-      <label className="block text-sm font-medium text-gray-700 mb-1">Select Color</label>
-      <select
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
-        className="w-full border rounded p-2 mb-3"
-      >
-        {Object.keys(colorSwatches).map((c, i) => (
-          <option key={i}>{c}</option>
-        ))}
-      </select>
-
-      {/* Swatch preview */}
-      <div className="flex flex-col items-center mb-4">
-        <div
-          className="w-full h-10 rounded border border-gray-300 mb-1"
-          style={{ backgroundColor: colorSwatches[color] }}
-        ></div>
-        <span className="text-sm text-gray-700">{color}</span>
+      {/* Stepper */}
+      <div className="flex justify-between mb-6">
+        <span className={step === 1 ? "font-bold" : "text-gray-400"}>1. Pick Size</span>
+        <span className={step === 2 ? "font-bold" : "text-gray-400"}>2. Pick Pattern</span>
+        <span className={step === 3 ? "font-bold" : "text-gray-400"}>3. Pick Color</span>
+        <span className={step === 4 ? "font-bold" : "text-gray-400"}>4. Review & Buy</span>
       </div>
+      <Separator className="mb-6" />
 
-      {/* Custom design checkbox */}
-      <div className="text-left mb-2">
-        <label className="inline-flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={customEnabled}
-            onChange={(e) => setCustomEnabled(e.target.checked)}
-            className="form-checkbox"
-          />
-          <span className="text-sm text-gray-700 font-medium">Customize this vent</span>
-        </label>
-      </div>
-
-      {/* Custom text input */}
-      {customEnabled && (
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Engraving or Text</label>
-          <input
-            type="text"
-            value={customText}
-            onChange={(e) => setCustomText(e.target.value)}
-            placeholder="e.g., The Smiths, Merry Christmas"
-            className="w-full border rounded p-2"
-          />
+      {/* Step Content */}
+      {step === 1 && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {sizes.map((size) => (
+            <Card
+              key={size.label}
+              className={`cursor-pointer ${
+                selectedSize === size.label ? "ring-2 ring-blue-500" : ""
+              }`}
+              onClick={() => {
+                setSelectedSize(size.label);
+                setSelectedPattern(null);
+              }}
+            >
+              <CardContent className="p-4 text-center">
+                <img
+                  src={`/vents/${size.label}.bmp`}
+                  alt={size.label}
+                  className="mx-auto h-24 object-contain mb-2"
+                />
+                <p className="font-semibold text-lg">{size.label}</p>
+                <p className="text-sm text-gray-500">{size.dimensions}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
 
-      {/* Buy button */}
-      <button
-        className="mt-auto bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-semibold transition-all"
-        onClick={() => {
-          alert(`Order:\n${name}\nColor: ${color}\nCustom: ${customEnabled ? customText : "No"}`);
-        }}
-      >
-        Buy Now
-      </button>
+      {step === 2 && selectedSize && (
+        <>
+          <p className="text-center mb-4">Selected Size: <strong>{selectedSize}</strong></p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {getPatternsForSize(selectedSize).map((patternLabel) => (
+              <Card
+                key={patternLabel}
+                className={`cursor-pointer ${
+                  selectedPattern === patternLabel ? "ring-2 ring-blue-500" : ""
+                }`}
+                onClick={() => setSelectedPattern(patternLabel)}
+              >
+                <CardContent className="p-4 text-center">
+                  <img
+                    src={`/vents/${selectedSize}/${patternLabel}.bmp`}
+                    alt={patternLabel}
+                    className="mx-auto h-24 object-contain mb-2"
+                  />
+                  <p className="font-semibold text-lg">{patternLabel.replace(`${selectedSize}_`, "")}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
+
+      {step === 3 && (
+        <>
+          <p className="text-center mb-4">Selected Size: <strong>{selectedSize}</strong> | Pattern: <strong>{selectedPattern}</strong></p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {colors.map((color) => (
+              <Card
+                key={color.name}
+                className={`cursor-pointer flex items-center gap-4 p-4 ${
+                  selectedColor === color.name ? "ring-2 ring-blue-500" : ""
+                }`}
+                onClick={() => setSelectedColor(color.name)}
+              >
+                <div className="w-12 h-6 rounded" style={{ backgroundColor: color.hex }} />
+                <span className="text-lg font-medium">{color.name}</span>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
+
+      {step === 4 && (
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-6">Review Your Order</h2>
+          <Summary />
+        </div>
+      )}
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-between mt-10">
+        {step > 1 ? <Button onClick={handleBack}>Back</Button> : <div />}
+        {step < 4 ? (
+          <Button onClick={handleNext} disabled={(step === 1 && !selectedSize) || (step === 2 && !selectedPattern) || (step === 3 && !selectedColor)}>Next</Button>
+        ) : (
+          <Button disabled={!isReadyToBuy}>Buy Now</Button>
+        )}
+      </div>
     </div>
   );
 }
-
-function Shop() {
-  const products = [
-    { name: "4x8 Vent", price: "$24.99", image: "/vents/4x8.png" },
-    { name: "4x10 Vent", price: "$26.99", image: "/vents/4x10.png" },
-    { name: "4x12 Vent", price: "$28.99", image: "/vents/4x12.png" },
-    { name: "4x14 Vent", price: "$30.99", image: "/vents/4x14.png" },
-    { name: "6x10 Vent", price: "$32.99", image: "/vents/6x10.png" },
-    { name: "6x12 Vent", price: "$34.99", image: "/vents/6x12.png" },
-    { name: "6x14 Vent", price: "$36.99", image: "/vents/6x14.png" },
-  ];
-
-  return (
-    <section className="bg-gray-100 py-16 px-4 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">Shop DynamicVent</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, i) => (
-            <ProductCard key={i} {...product} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default Shop;
