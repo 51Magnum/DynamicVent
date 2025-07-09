@@ -10,12 +10,12 @@ function App() {
     <Router>
       <div className="min-h-screen bg-white text-gray-800">
 		<header className="bg-gray-900 text-white p-4 shadow-md">
-		  <div className="max-w-6xl mx-auto flex justify-between items-center">
+		  <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
 			<div className="flex items-center space-x-3">
 			  <img src="/logo.png" alt="DynamicVent logo" className="h-10 w-auto" />
 			  <h1 className="text-xl font-bold">DynamicVent</h1>
 			</div>
-			<nav className="space-x-4">
+			<nav className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center">
 			  <Link to="/">Home</Link>
 			  <Link to="/how-it-works">How It Works</Link>
 			  <Link to="/shop">Shop</Link>
@@ -24,6 +24,7 @@ function App() {
 			</nav>
 		  </div>
 		</header>
+
 
 
         <main className="max-w-6xl mx-auto py-10 px-4">
