@@ -12,13 +12,13 @@ export default function Shop() {
   const [kitOption, setKitOption] = useState(null);
 
   const patternNamesBySize = {
-    "4x8": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "4x10": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "4x12": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "4x14": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "6x10": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "6x12": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
-    "6x14": ["Chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"]
+    "4x8": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "4x10": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "4x12": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "4x14": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "6x10": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "6x12": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"],
+    "6x14": ["chevron", "HappyHoliday", "RecPatter-1", "Round-1", "Round-2", "Round-3", "Square-1", "Square-2", "Square-3"]
   };
 
   const getPatternsForSize = (size) => {
