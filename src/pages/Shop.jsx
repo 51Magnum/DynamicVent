@@ -20,7 +20,7 @@ export default function Shop() {
       <div>
         <p className="text-xl font-bold mb-2">Selected Pattern:</p>
         <img
-          src={`/vents/${selectedSize}/${selectedPattern}.bmp`}
+          src={`/vents/${selectedSize}/${selectedPattern}.png`}
           alt={selectedPattern}
           className="mx-auto mb-2 h-48 object-contain shadow-sm border rounded"
         />
@@ -174,7 +174,7 @@ export default function Shop() {
             >
               <CardContent className="p-4 text-center">
                 <img
-                  src={`/vents/${size.label}.bmp`}
+                  src={`/vents/${size.label}.png`}
                   alt={size.label}
                   className="mx-auto h-24 object-contain mb-2"
                 />
@@ -200,7 +200,7 @@ export default function Shop() {
               >
                 <CardContent className="p-4 text-center">
                   <img
-                    src={`/vents/${selectedSize}/${patternLabel}.bmp`}
+                    src={`/vents/${selectedSize}/${patternLabel}.png`}
                     alt={patternLabel}
                     className="mx-auto h-24 object-contain mb-2"
                   />
