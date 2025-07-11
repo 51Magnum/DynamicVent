@@ -1,11 +1,4 @@
-import { useState } from "react";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-
 function Home() {
-  const [index, setIndex] = useState(-1); // Controls lightbox visibility
-
   return (
     <div className="text-white bg-gradient-to-b from-gray-900 to-gray-800">
       {/* Hero */}
@@ -22,9 +15,9 @@ function Home() {
       {/* What Is It */}
       <section className="max-w-4xl mx-auto py-16 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">Why DynamicVent?</h2>
-        <p className="text-gray-300">
-          DynamicVent transforms the look and feel of your home by replacing outdated, builder-grade vents with sleek, flush-mount floor registers. Available in a range of designer styles — or fully customizable with your own patterns or wording — our vents bring precision airflow and polished aesthetics to any hardwood floor. Installation is easy: use our included template, cut the opening with a router, and drop your new vent in place. No screws. No compromises.
-        </p>
+		<p className="text-gray-300">
+		  DynamicVent transforms the look and feel of your home by replacing outdated, builder-grade vents with sleek, flush-mount floor registers. Available in a range of designer styles — or fully customizable with your own patterns or wording — our vents bring precision airflow and polished aesthetics to any hardwood floor. Installation is easy: use our included template, cut the opening with a router, and drop your new vent in place. No screws. No compromises.
+		</p>
       </section>
 
       {/* How It Works */}
@@ -52,30 +45,20 @@ function Home() {
       <section className="max-w-5xl mx-auto py-16 px-6">
         <h2 className="text-3xl font-bold text-center text-white mb-10">Example of Vent Styles</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-          {[...Array(15)].map((_, i) => (
-            <img
-              key={i}
-              src={`/gallery${i + 1}.jpg`}
-              alt={`Gallery ${i + 1}`}
-              className="rounded-lg shadow-md cursor-pointer"
-              loading="lazy"
-              onClick={() => setIndex(i)}
-            />
-          ))}
-        </div>
-
-        <Lightbox
-          open={index >= 0}
-          index={index}
-          close={() => setIndex(-1)}
-          slides={[...Array(15)].map((_, i) => ({
-            src: `/gallery${i + 1}.jpg`,
-          }))}
-          plugins={[Zoom]}
-        />
+		  {[...Array(15)].map((_, i) => (
+			<img
+			  key={i}
+			  src={`/gallery${i + 1}.jpg`}
+			  alt={`Gallery ${i + 1}`}
+			  className="rounded-lg shadow-md"
+			  loading="lazy"
+			/>
+		  ))}
+		</div>
       </section>
     </div>
   );
 }
 
 export default Home;
+
