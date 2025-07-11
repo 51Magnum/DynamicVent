@@ -44,14 +44,17 @@ function Home() {
       {/* Gallery */}
       <section className="max-w-5xl mx-auto py-16 px-6">
         <h2 className="text-3xl font-bold text-center text-white mb-10">Example of Vent Styles</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <img src="/gallery1.jpg" alt="vent 1" className="rounded-lg shadow" />
-          <img src="/gallery2.jpg" alt="vent 2" className="rounded-lg shadow" />
-          <img src="/gallery3.jpg" alt="vent 3" className="rounded-lg shadow" />
-          <img src="/gallery4.jpg" alt="vent 4" className="rounded-lg shadow" />
-          <img src="/gallery5.jpg" alt="vent 5" className="rounded-lg shadow" />
-          <img src="/gallery6.jpg" alt="vent 6" className="rounded-lg shadow" />
-        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+		  {[...Array(15)].map((_, i) => (
+			<img
+			  key={i}
+			  src={`/gallery${i + 1}.jpg`}
+			  alt={`Gallery ${i + 1}`}
+			  className="rounded-lg shadow-md"
+			  loading="lazy"
+			/>
+		  ))}
+		</div>
       </section>
     </div>
   );
