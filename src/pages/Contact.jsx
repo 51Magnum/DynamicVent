@@ -3,6 +3,7 @@ import { useState } from 'react';
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -10,7 +11,8 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('Sending...');
+    setLoading(true);
+    setStatus('');
 
     try {
       const res = await fetch('/api/contact', {
@@ -19,12 +21,19 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Failed to send message.');
+      }
+
       const data = await res.json();
       setStatus(data.message || 'Message sent!');
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {
-      console.error(err);
-      setStatus('Failed to send message.');
+      console.error('Form submission error:', err);
+      setStatus('❌ ' + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,7 +41,9 @@ export default function Contact() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-10">
         <h1 className="text-4xl font-bold mb-2 text-gray-900">Contact Us</h1>
-        <p className="mb-6 text-gray-600">We’d love to hear from you. Fill out the form and we’ll get back shortly.</p>
+        <p className="mb-6 text-gray-600">
+          We’d love to hear from you. Fill out the form and we’ll get back to you shortly.
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
@@ -67,9 +78,12 @@ export default function Contact() {
 
           <button
             type="submit"
-            className="w-full bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-800 transition"
+            disabled={loading}
+            className={`w-full bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg transition ${
+              loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-800'
+            }`}
           >
-            Send Message
+            {loading ? 'Sending...' : 'Send Message'}
           </button>
         </form>
 
@@ -78,4 +92,3 @@ export default function Contact() {
     </div>
   );
 }
-
